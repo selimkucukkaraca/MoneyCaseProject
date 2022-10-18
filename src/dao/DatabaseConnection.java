@@ -97,5 +97,18 @@ public class DatabaseConnection {
         return balance;
     }
 
+    public void updateBalance(double amount, String username) throws SQLException {
+
+        double existBalance = getBalanceByUser(username); //
+        double updatedBalance = existBalance += amount; //
+
+        preparedStatement = con.prepareStatement(updateBalanceQuery(updatedBalance, username));
+
+        preparedStatement.executeUpdate();
+    }
+
+    private String updateBalanceQuery(double balance, String username) {
+        return "Update balance SET balance = " + balance + "WHERE user = '" + username + "'";
+    }
 
 }

@@ -7,5 +7,7 @@ public interface Query {
     String depositMoney = "Insert Into balance (user,balance) VALUES(?,?)";
     String addLog = "Insert Into log (id,description,date) VALUES(?,?,?)";
     String getBalanceByUserName = "SELECT * FROM balance WHERE user = '";
+    //String updateBalance = "Update balance SET balance = '";
+
 
 }
