@@ -53,6 +53,7 @@ public class DatabaseConnection {
     }
 
     public Balance withdrawMoney(double balance){
+        System.out.println("money-service");
 
             try {
                 preparedStatement = con.prepareStatement(Query.depositMoney);
