@@ -1,6 +1,7 @@
 package dao;
 
 import model.Balance;
+import model.Log;
 import utils.DatabaseInformation;
 import utils.Query;
 
@@ -53,19 +54,33 @@ public class DatabaseConnection {
 
     public Balance withdrawMoney(double balance){
 
-        int query = Query.depositMoney;
-
             try {
-                preparedStatement = con.prepareStatement(String.valueOf(query));
+                preparedStatement = con.prepareStatement(Query.depositMoney);
                 Balance balance1 = new Balance(balance);
-                preparedStatement.setInt(1, (int) balance1.getBalance());
+                preparedStatement.setDouble(1,balance1.getBalance());
                 preparedStatement.executeUpdate();
 
-                return null;
+                System.out.println(balance1.getBalance());
+                return balance1;
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+    }
+
+    public void addLog(Log log) {
+
+        try {
+            preparedStatement = con.prepareStatement(Query.addLog);
+            preparedStatement.setString(1, log.getId());
+            preparedStatement.setString(2, log.getDescription());
+            preparedStatement.setString(3, String.valueOf(log.getDate()));
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 

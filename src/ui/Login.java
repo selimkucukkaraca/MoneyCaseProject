@@ -1,5 +1,7 @@
 package ui;
 
+import model.Log;
+import service.LogService;
 import service.UserService;
 import ui.Home.Home;
 
@@ -18,6 +20,7 @@ public class Login {
     private JLabel warnLabel;
 
     private final UserService userService = new UserService();
+    private final LogService logService = new LogService();
 
 
     public Login() {
@@ -43,6 +46,7 @@ public class Login {
                 }
                 else {
                     warnLabel.setText("Wrong attempt");
+                    logService.addLog(new Log(name + " wrong attempt"));
                 }
             }
         });
