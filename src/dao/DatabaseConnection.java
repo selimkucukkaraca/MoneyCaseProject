@@ -52,17 +52,17 @@ public class DatabaseConnection {
         }
     }
 
-    public Balance withdrawMoney(double balance){
-        System.out.println("money-service");
+    public void withdrawMoney(String user, double amount){
 
             try {
                 preparedStatement = con.prepareStatement(Query.depositMoney);
-                Balance balance1 = new Balance(balance);
-                preparedStatement.setDouble(1,balance1.getBalance());
+                Balance balance = new Balance(user, amount);
+                preparedStatement.setString(1, balance.getUser());
+                preparedStatement.setDouble(2,balance.getBalance());
                 preparedStatement.executeUpdate();
 
-                System.out.println(balance1.getBalance());
-                return balance1;
+
+                //System.out.println(balance1.getBalance());
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -82,6 +82,19 @@ public class DatabaseConnection {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public double getBalanceByUser(String user) throws SQLException {
+
+        statement = con.createStatement();
+        String query = Query.getBalanceByUserName + user + "'"; //TODO: refactor
+
+        ResultSet resultSet = statement.executeQuery(query);
+        double balance = 0;
+        while (resultSet.next()){
+             balance = resultSet.getDouble("balance");
+        }
+        return balance;
     }
 
 

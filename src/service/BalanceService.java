@@ -3,24 +3,25 @@ package service;
 import dao.DatabaseConnection;
 import model.Balance;
 
+import java.sql.SQLException;
+
 public class BalanceService {
 
     private final DatabaseConnection databaseConnection = new DatabaseConnection();
 
-    public void depositMoney(double balance){
-            databaseConnection.withdrawMoney(balance);
+    public void depositMoney(String user, double balance){
+            databaseConnection.withdrawMoney(user, balance);
     }
 
     public void withdrawMoney(double balance){
 
-    }
-/*
-    private boolean checkBalance(Balance balance){
-        if (balance.equals("0")){
-        }
-        return false;
+
     }
 
- */
+    public double getBalanceByUser(String user) throws SQLException {
+        return databaseConnection.getBalanceByUser(user);
+    }
+
+
 
 }

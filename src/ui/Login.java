@@ -21,10 +21,12 @@ public class Login {
 
     private final UserService userService = new UserService();
     private final LogService logService = new LogService();
+    public static String user;
 
 
     public Login() {
         loginButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = nameField.getText();
@@ -32,6 +34,7 @@ public class Login {
                 int password = Integer.parseInt(passwordField.getText());
 
                 if (userService.login(name,surname,password)){
+                    user = name;
                     warnLabel.setText("");
                     JFrame frame = new JFrame();
 
