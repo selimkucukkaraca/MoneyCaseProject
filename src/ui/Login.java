@@ -40,7 +40,8 @@ public class Login {
 
                     try {
                         frame.setContentPane(new Home().rootPanel);
-                        frame.setSize(700,700);
+                        frame.setSize(600,300);
+                        frame.setLocation(400, 200);
                         frame.setTitle("Home");
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
@@ -90,7 +91,7 @@ public class Login {
         jFrame.setContentPane(new Login().rootPanel);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setVisible(true);
-        jFrame.setSize(500, 500);
+        jFrame.setSize(400, 300);
         jFrame.setTitle("Login");
         jFrame.setLocation(300, 300);
 

@@ -63,7 +63,7 @@ public class DatabaseConnection {
                 preparedStatement.setDouble(2,balance.getBalance());
                 preparedStatement.executeUpdate();
 
-
+                System.out.println();
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
