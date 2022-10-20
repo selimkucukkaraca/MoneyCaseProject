@@ -1,6 +1,8 @@
 package ui.Home;
 
+import request.CreateOperationHistoryRequest;
 import service.BalanceService;
+import service.OperationHistoryService;
 import ui.Login;
 
 import javax.swing.*;
@@ -11,7 +13,6 @@ import java.sql.SQLException;
 public class Home {
     public JPanel rootPanel;
     private JButton depositMoneyButton;
-    private JButton withdrawMoneyButton;
     private JLabel balanceField;
     private JTextField balanceAmount;
     private JButton addAmount;
@@ -20,20 +21,22 @@ public class Home {
     private JButton updateBalanceButton;
 
     private final BalanceService balanceService = new BalanceService();
+    private final OperationHistoryService operationHistoryService = new OperationHistoryService();
+    private String loginUser = Login.user;
    // private final Login login = new Login();
 
     public Home() throws SQLException {
-        double balance = balanceService.getBalanceByUser(Login.user);
+        double balance = balanceService.getBalanceByUser(loginUser);
         balanceField.setText(String.valueOf(balance));
 
-        //balanceAmount.setText(String.valueOf(balance));
+        balanceAmount.setText(String.valueOf(balance));
 
 
         depositMoneyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                balanceService.depositMoney(Login.user, Double.parseDouble(balanceAmount.getText()));
+                balanceService.depositMoney(loginUser, Double.parseDouble(balanceAmount.getText()));
 
             }
         });
@@ -64,9 +67,9 @@ public class Home {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String amount = balanceAmount.getText();
-                String username = Login.user;
                 try {
-                    balanceService.updateBalance(Double.parseDouble(amount), username);
+                    balanceService.updateBalance(Double.parseDouble(amount), loginUser);
+                    operationHistoryService.saveOperationHistory(new CreateOperationHistoryRequest(Double.parseDouble(amount), loginUser));
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

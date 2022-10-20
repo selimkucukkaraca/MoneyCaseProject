@@ -2,6 +2,8 @@ package dao;
 
 import model.Balance;
 import model.Log;
+import model.OperationHistory;
+import request.CreateOperationHistoryRequest;
 import utils.DatabaseInformation;
 import utils.Query;
 
@@ -62,7 +64,6 @@ public class DatabaseConnection {
                 preparedStatement.executeUpdate();
 
 
-                //System.out.println(balance1.getBalance());
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -99,12 +100,25 @@ public class DatabaseConnection {
 
     public void updateBalance(double amount, String username) throws SQLException {
 
-        double existBalance = getBalanceByUser(username); //
-        double updatedBalance = existBalance += amount; //
-
-        preparedStatement = con.prepareStatement(updateBalanceQuery(updatedBalance, username));
+        preparedStatement = con.prepareStatement(updateBalanceQuery(amount, username));
 
         preparedStatement.executeUpdate();
+    }
+
+    public void saveOperationHistory(CreateOperationHistoryRequest request) {
+        OperationHistory operationHistory = new OperationHistory(request.getAmount(), request.getUser());
+
+        try {
+            preparedStatement = con.prepareStatement(Query.saveOperationQuery);
+            preparedStatement.setString(1, operationHistory.getId());
+            preparedStatement.setDouble(2, operationHistory.getAmount());
+            preparedStatement.setString(3, operationHistory.getUser());
+            preparedStatement.setString(4, String.valueOf(operationHistory.getDate()));
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String updateBalanceQuery(double balance, String username) {
