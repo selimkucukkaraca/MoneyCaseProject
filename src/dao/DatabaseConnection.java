@@ -126,10 +126,9 @@ public class DatabaseConnection {
         double fromUserBalance = getBalanceByUser(transfer.getFromUser());
         double toUserBalance = getBalanceByUser(transfer.getToUser());
 
-        preparedStatement = con.prepareStatement(updateBalanceQuery(fromUserBalance - transfer.getAmount(), transfer.getFromUser())); // gonderen
-        preparedStatement = con.prepareStatement(updateBalanceQuery(toUserBalance + transfer.getAmount(), transfer.getToUser())); // alan
+        updateBalance(fromUserBalance - transfer.getAmount(), transfer.getFromUser());
+        updateBalance(toUserBalance + transfer.getAmount(), transfer.getToUser());
 
-        preparedStatement.executeUpdate();
     }
 
     private String updateBalanceQuery(double balance, String username) {

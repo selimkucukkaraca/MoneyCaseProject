@@ -14,8 +14,7 @@ public class Transfer {
     private JTextField transferAmount;
     private JButton goTransferButton;
 
-    private String loginUser = Login.user;
-    private BalanceService balanceService = new BalanceService();
+    private final BalanceService balanceService = new BalanceService();
 
 
     public Transfer() {
@@ -26,7 +25,7 @@ public class Transfer {
                 double amount = Double.parseDouble(transferAmount.getText());
 
                 try {
-                    balanceService.transferMoney(new model.Transfer(loginUser, toUser, amount));
+                    balanceService.transferMoney(new model.Transfer(Login.user, toUser, amount));
 
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
