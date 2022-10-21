@@ -4,6 +4,8 @@ import request.CreateOperationHistoryRequest;
 import service.BalanceService;
 import service.OperationHistoryService;
 import ui.Login;
+import ui.MoneyTransfer.Transfer;
+
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -77,5 +79,20 @@ public class Home {
 
             }
         });
+        moneyTransferButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame();
+                    frame.setContentPane(new Transfer().rootPanel);
+                    frame.setSize(600,300);
+                    frame.setLocation(500, 100);
+                    frame.setTitle("Money Transfer");
+                    frame.setVisible(true);
+            }
+        });
+
+
+
+
     }
 }

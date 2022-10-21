@@ -3,6 +3,7 @@ package dao;
 import model.Balance;
 import model.Log;
 import model.OperationHistory;
+import model.Transfer;
 import request.CreateOperationHistoryRequest;
 import utils.DatabaseInformation;
 import utils.Query;
@@ -121,8 +122,17 @@ public class DatabaseConnection {
         }
     }
 
+    public void transferMoney(Transfer transfer) throws SQLException {
+        double fromUserBalance = getBalanceByUser(transfer.getFromUser());
+        double toUserBalance = getBalanceByUser(transfer.getToUser());
+
+        preparedStatement = con.prepareStatement(updateBalanceQuery(fromUserBalance - transfer.getAmount(), transfer.getFromUser())); // gonderen
+        preparedStatement = con.prepareStatement(updateBalanceQuery(toUserBalance + transfer.getAmount(), transfer.getToUser())); // alan
+
+        preparedStatement.executeUpdate();
+    }
+
     private String updateBalanceQuery(double balance, String username) {
         return "Update balance SET balance = " + balance + "WHERE user = '" + username + "'";
     }
-
 }

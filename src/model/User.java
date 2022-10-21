@@ -14,5 +14,4 @@ public class User {
         this.surname = surname;
         this.password = password;
     }
-
 }

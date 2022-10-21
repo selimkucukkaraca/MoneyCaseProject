@@ -1,6 +1,7 @@
 package service;
 
 import dao.DatabaseConnection;
+import model.Transfer;
 
 import java.sql.SQLException;
 
@@ -19,6 +20,10 @@ public class BalanceService {
 
    public void updateBalance(double balance, String username) throws SQLException {
         databaseConnection.updateBalance(balance, username);
+   }
+
+   public void transferMoney(Transfer transfer) throws SQLException {
+        databaseConnection.transferMoney(transfer);
    }
 
 
